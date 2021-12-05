@@ -1,0 +1,13 @@
+# file, folder
+.idea
+__pycache__
+docs
+*.zip
+logs
+
+# extension
+*.pth
+*.mar
+*.jpg
+*.jpeg
+*.png
