@@ -22,7 +22,7 @@ class ModelHandler(BaseHandler):
         print("Start initializing *****")
         # extract zip file
         properties = context.system_properties
-        model_dir = properties.get("model_dir")
+        model_dir = properties.get("model_dir")  # /tmp/models/<random name>/src/...
         try:
             with zipfile.ZipFile(model_dir + "/src.zip", "r") as zip_ref:
                 zip_ref.extractall(model_dir)
@@ -59,8 +59,10 @@ class ModelHandler(BaseHandler):
         self.initialized = True
 
     def preprocess(self, data):
+        """
+        data: list[dict(bytearray(b'))]
+        """
         row = data[0]
-        id = row.get("id")
         image = row.get("image")
         image = io.BytesIO(image)
         image = cv2.imdecode(np.frombuffer(image.getbuffer(), np.uint8), -1)
@@ -68,12 +70,10 @@ class ModelHandler(BaseHandler):
         return image
 
     def inference(self, data, *args, **kwargs):
-        # 1. classify id card
-
-        # 2. detect line
+        # 1. detect line
         boxes, box_labels, box_images = self.det_model.process(data)
 
-        # 3. recognize line
+        # 2. recognize line
         texts = []
         text_scores = []
         for b_image in box_images:
@@ -106,7 +106,6 @@ class ModelHandler(BaseHandler):
             data = self.preprocess(data)
             data = self.inference(data)
             data = self.postprocess(data)
-            print(type(data))
             return self._pack_return_message(config.SUCCESSFULLY, data)
         except Exception as e:
             logger.error(f"Error occurs on inference session: {e}", exc_info=True)
