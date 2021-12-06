@@ -40,11 +40,10 @@ This source code is used to learn TorchServe
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Getting Started
-### Prerequisites
-* torchserve packages
-    ```shell
-    pip install -r requirements.txt
-    ```
+### Install Packages
+```shell
+pip install -r requirements.txt
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -62,7 +61,9 @@ This source code is used to learn TorchServe
 - [x] Seminar slide
 - [x] Custom TS examples
   - [x] Multi models
-- []  Integrate TorchServe in Docker
+- [] Batch Inference
+- [] Advanced configuration
+- [] Integrate TorchServe in Docker
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Acknowledgments
